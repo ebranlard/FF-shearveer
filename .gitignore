@@ -1,0 +1,14 @@
+*.dll
+*.exe
+*.pdf
+*.png
+
+_*
+
+*.out
+*.outb
+
+vtk*
+*.vtk
+
+*x64*

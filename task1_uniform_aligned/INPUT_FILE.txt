@@ -1,0 +1,7 @@
+
+1       NumScheme  - Finite Difference (1) or Forward-Euler (2) 
+True    Cartesian  - Switch between wake formulations: Polar (1) or Cartesian (2)
+0       Continuity
+False   Swirl              - Switch to include swirl velocities in wake (-) (switch) [DEFAULT=TRUE]
+True    Curl
+0       ShearVeer
