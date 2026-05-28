@@ -17,8 +17,8 @@ from welib.tools.stats import mean_rel_err
 export=True
 
 IPlot=[]
-IPlot+=[0]
-IPlot+=[1]
+IPlot+=[0]# Postprocessing
+IPlot+=[1] # plotting
 
 def store_lines(folder='task1_uniform_aligned', U0=12, zMid=250, filebases=None, DPlanes=None, D=126, outDir='_data/'):
     # Default values
@@ -91,6 +91,7 @@ filebases = {
     'Curl'     :'input_curl',
     'Polar'    :'input_polar',
     'Cartesian':'input_cart',
+#     'Cart_new':'input_cart_new',
     }
 
 if 0 in IPlot:

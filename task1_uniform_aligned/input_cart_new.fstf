@@ -43,7 +43,12 @@ WT_X    WT_Y   WT_Z   WT_FASTInFile     X0_High  Y0_High  Z0_High  dX_High  dY_H
 (m)     (m)    (m)    (string)          (m)      (m)      (m)      (m)      (m)      (m)
 5.0     0.0    0.0    "FFTest_WT1.fst"   -77.7    -80.0   5.0      10.17    10.0     10.0
 --- WAKE DYNAMICS ---
-3                  Mod_Wake           - Switch between wake formulations {1:Polar, 2:Curl, 3:Cartesian} (-) (switch)
+1                  NumScheme          - Numerical Scheme {1:Forward-Euler, 2:Finite-Differences} (-) (switch) 
+True               Cartesian          - Cartesian or polar wake formulation (-) (flag) 
+False              Continuity         - Apply continuity                    (-) [only applies if NumScheme=2] (flag)
+False              Swirl              - Include swirl corrections           (-) [only applies if Cartesian=True] (flag)
+False              Curl               - Include curl  corrections           (-) [only applies if Cartesian=True] (flag)
+False              ShearVeer          - Include shear/veer corrections      (-) [only applies if Cartesian=True] (flag)
 125                RotorDiamRef       - Reference turbine rotor diameter for wake calculations (m) [>0.0]
 10.0               dr                 - Radial increment of radial finite-difference grid (m) [>0.0]
 40                 NumRadii           - Number of radii in the radial finite-difference grid (-) [>=2]
@@ -62,7 +67,6 @@ DEFAULT            C_WakeDiam         - Calibrated parameter for wake diameter c
 DEFAULT            Mod_Meander        - Spatial filter model for wake meandering (-) (switch) {1: uniform, 2: truncated jinc, 3: windowed jinc} or DEFAULT [DEFAULT=3]
 DEFAULT            C_Meander          - Calibrated parameter for wake meandering (-) [>=1.0] or DEFAULT [DEFAULT=1.9]
 --- CURLED-WAKE PARAMETERS [only used if Mod_Wake=2 or 3] ---
-False              Swirl              - Switch to include swirl velocities in wake (-) (switch) [DEFAULT=TRUE]
 0.0                k_VortexDecay      - Vortex decay constant for curl (-) [DEFAULT=0.0001]
 DEFAULT            NumVortices        - The number of vortices in the curled wake model (-) [DEFAULT=100]
 DEFAULT            sigma_D            - The width of the vortices in the curled wake model non-dimesionalized by rotor diameter (-) [DEFAULT=0.2]
