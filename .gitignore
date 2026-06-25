@@ -12,3 +12,6 @@ vtk*
 *.vtk
 
 *x64*
+
+OpenFAST/
+build-single-debug/

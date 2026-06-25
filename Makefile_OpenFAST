@@ -188,7 +188,7 @@ compile: $(BUILD_DIR)
 ifeq ($(strip $(QUICK)),1)
 	cd $(BUILD_DIR) && $(MAKE) $(MAKE_ARGS) $(MAKE_TARGET)
 else
-	cd $(BUILD_DIR) && cmake $(CMAKE_ARGS) .. && $(MAKE) $(MAKE_ARGS) $(MAKE_TARGET)
+	cd $(BUILD_DIR) && cmake $(CMAKE_ARGS) ../OpenFAST && $(MAKE) $(MAKE_ARGS) $(MAKE_TARGET)
 endif
 
 clean:
