@@ -48,7 +48,7 @@ True               Cartesian          - Cartesian or polar wake formulation (-) 
 False              Continuity         - Apply continuity                    (-) [only applies if NumScheme=2] (flag)
 False              Swirl              - Include swirl corrections           (-) [only applies if Cartesian=True] (flag)
 False              Curl               - Include curl  corrections           (-) [only applies if Cartesian=True] (flag)
-False              ShearVeer          - Include shear/veer corrections      (-) [only applies if Cartesian=True] (flag)
+True               ShearVeer          - Include shear/veer corrections      (-) [only applies if Cartesian=True] (flag)
 125                RotorDiamRef       - Reference turbine rotor diameter for wake calculations (m) [>0.0]
 10.0               dr                 - Radial increment of radial finite-difference grid (m) [>0.0]
 40                 NumRadii           - Number of radii in the radial finite-difference grid (-) [>=2]
@@ -127,3 +127,6 @@ WkPosZT1D1"
 "WkDfVxT1N01D2, WkDfVxT1N02D2, WkDfVxT1N03D2, WkDfVxT1N04D2, WkDfVxT1N05D2, WkDfVxT1N06D2, WkDfVxT1N07D2, WkDfVxT1N08D2, WkDfVxT1N09D2, WkDfVxT1N10D2, WkDfVxT1N11D2, WkDfVxT1N12D2, WkDfVxT1N13D2, WkDfVxT1N14D2, WkDfVxT1N15D2, WkDfVxT1N16D2, WkDfVxT1N17D2, WkDfVxT1N18D2, WkDfVxT1N19D2, WkDfVxT1N20D2"
 "WkDfVxT1N01D3, WkDfVxT1N02D3, WkDfVxT1N03D3, WkDfVxT1N04D3, WkDfVxT1N05D3, WkDfVxT1N06D3, WkDfVxT1N07D3, WkDfVxT1N08D3, WkDfVxT1N09D3, WkDfVxT1N10D3, WkDfVxT1N11D3, WkDfVxT1N12D3, WkDfVxT1N13D3, WkDfVxT1N14D3, WkDfVxT1N15D3, WkDfVxT1N16D3, WkDfVxT1N17D3, WkDfVxT1N18D3, WkDfVxT1N19D3, WkDfVxT1N20D3"
 END of input file (the word "END" must appear in the first 3 columns of this last OutList line)
+--- ADVANCED OPTIONS
+1.0,2.0,3.0,4.2,5.0,6.1 Slopes  - SyU !SzU !SyV !SzV !SyW !SzW
+
