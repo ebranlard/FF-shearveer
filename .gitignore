@@ -1,17 +1,42 @@
-*.dll
-*.exe
-*.pdf
-*.png
+# Local OpenFAST checkouts
+/OpenFAST/
+/openfast-ff-shearveer/
 
-_*
+# Independent task repositories
+/Cartesian_general/
 
+# OpenFAST build / source artifacts
+/build-single-debug/
+/build*/
+/vs-build/
+/reg_tests/
+/unit_tests/
+/share/
+/modules/
+/cmake/
+/glue-codes/
+/openfast_io/
+
+# Local run / deployment packages
+/RunPack/
+/RunPack.zip
+/Cartesian_general-20260820T130247Z-1-001.zip
+/_data/
+
+# Compiled executables
+/FAST_x64s_debug_f-ff-shearveer_
+/FAST_x64s_debug_main_
+
+# Python cache
+__pycache__/
+*.pyc
+*.egg-info
+
+# Editor
+.vscode/
+
+# Generated simulation output
 *.out
-*.outb
-
-vtk*
 *.vtk
-
-*x64*
-
-OpenFAST/
-build-single-debug/
+/task1_uniform_aligned/vtk_ff/
+/task1_uniform_aligned/vtk_ff_planes/

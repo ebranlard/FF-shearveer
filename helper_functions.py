@@ -91,6 +91,7 @@ def extractPlane(kind, folder, base, iPlane=1, iTime=None, removeBoundaries=None
     Indices = sIndices.astype(int)
     if iTime is None:
         iTime= np.max(Indices)
+        
     iTime= int(iTime)
     # Return plane data
     if n==None:

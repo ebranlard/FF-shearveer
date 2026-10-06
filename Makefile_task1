@@ -1,0 +1,25 @@
+.PHONY: all run build cart polar post clean-vtk
+
+FASTFARM = ../build-single-debug/glue-codes/fast-farm/FAST.Farm
+
+all: build cart polar cart_slope post
+run: cart polar cart_slope post
+
+build:
+	$(MAKE) -f Makefile_OpenFAST compile
+
+cart:
+	cd task1_uniform_aligned && $(FASTFARM) input_cart_FE.fstf
+	
+cart_slope:
+	cd task1_uniform_aligned && $(FASTFARM) input_cart_FE_slope.fstf
+
+polar:
+	cd task1_uniform_aligned && $(FASTFARM) input_polar.fstf
+
+post:
+	python task1.py
+
+clean-vtk:
+	rm -rf task1_uniform_aligned/vtk_ff_planes/*
+	rm -rf task1_uniform_aligned/vtk_ff/*

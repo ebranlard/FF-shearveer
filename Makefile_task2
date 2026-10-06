@@ -1,0 +1,14 @@
+.PHONY: all build cart polar curl post
+
+FASTFARM = ../build-single-debug/glue-codes/fast-farm/FAST.Farm
+
+all: build cart polar curl post
+
+build:
+	$(MAKE) -f Makefile_OpenFAST compile
+
+cart_FD:
+	cd task2_uniform_aligned && $(FASTFARM) input_cart_FD.fstf
+	
+cart_FE:
+	cd task2_uniform_aligned && $(FASTFARM) input_cart_FE.fstf

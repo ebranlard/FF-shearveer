@@ -69,7 +69,7 @@ else ifeq ($(strip $(DRIVER)),4)
     CTEST_ARGS=-R hd_* --verbose --stop-on-failure --extra-verbose
 else ifeq ($(strip $(DRIVER)),5)
     MAKE_TARGET= FAST.Farm
-    DRIVEREXE=$(BUILD_DIR)$(SLASH)glue-codes$(SLASH)fast-farm$(SLASH)Fast.Farm$(EXEEXT)
+    DRIVEREXE=$(BUILD_DIR)/glue-codes/fast-farm/FAST.Farm$(EXEEXT)
     CMAKE_ARGS+=-DBUILD_FASTFARM:BOOL=ON
     CTEST_ARGS= -L fastfarm --verbose --stop-on-failure --extra-verbose
 else ifeq ($(strip $(DRIVER)),6)
@@ -91,7 +91,7 @@ CMAKE_ARGS+=-DOPENMP=ON
 # CMAKE_ARGS+= -DCMAKE_Fortran_FLAGS=""
 # CMAKE_ARGS+= -DBUILD_TESTING=ON
 CMAKE_ARGS+= -DBUILD_TESTING=ON -DCTEST_RUN_VERBOSE_FLAG=ON -DCTEST_PLOT_ERRORS=ON 
-CMAKE_ARGS+= -DCMAKE_Fortran_FLAGS_DEBUG="-fcheck=all,no-array-temps -pedantic -fbacktrace -fmax-errors=5"
+CMAKE_ARGS+= -DCMAKE_Fortran_FLAGS_DEBUG="-g -fcheck=all -fbacktrace"
 
 # CMAKE_ARGS+= -DCMAKE_Fortran_FLAGS="-DDBG_OUTS=ON"
 
@@ -188,7 +188,7 @@ compile: $(BUILD_DIR)
 ifeq ($(strip $(QUICK)),1)
 	cd $(BUILD_DIR) && $(MAKE) $(MAKE_ARGS) $(MAKE_TARGET)
 else
-	cd $(BUILD_DIR) && cmake $(CMAKE_ARGS) ../OpenFAST && $(MAKE) $(MAKE_ARGS) $(MAKE_TARGET)
+	cd $(BUILD_DIR) && cmake $(CMAKE_ARGS) ../openfast-ff-shearveer && $(MAKE) $(MAKE_ARGS) $(MAKE_TARGET)
 endif
 
 clean:
