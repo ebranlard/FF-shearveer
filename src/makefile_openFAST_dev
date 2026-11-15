@@ -1,0 +1,122 @@
+
+# ==============================================================================
+# OpenFAST - Upstream FAST.Farm
+# ==============================================================================
+
+# meant to be run inside /FF-shearveer
+# ------------------------------------------------------------------------------
+# Directories
+# ------------------------------------------------------------------------------
+
+SOURCE_DIR := repos/openfast
+BUILD_DIR  := build/openfast
+
+# ------------------------------------------------------------------------------
+# Main User Inputs
+# ------------------------------------------------------------------------------
+
+# 0: Debug, 1: Release
+RELEASE ?= 0
+
+# 0: Single, 1: Double
+DOUBLE  ?= 0
+
+# 0: Reconfigure CMake, 1: Reuse existing configuration
+QUICK   ?= 0
+
+# 0: No unit tests, 1: Run unit tests
+UTEST   ?= 0
+
+JOBS    ?= 16
+
+# ------------------------------------------------------------------------------
+# Build Configuration
+# ------------------------------------------------------------------------------
+
+CMAKE ?= cmake
+
+DRIVER := FAST.Farm
+
+ifeq ($(RELEASE),1)
+    BUILD_TYPE := Release
+else ifeq ($(RELEASE),0)
+    BUILD_TYPE := Debug
+else
+    $(error Bad RELEASE variable: use 0 or 1)
+endif
+
+ifeq ($(DOUBLE),1)
+    DOUBLE_PRECISION := ON
+else ifeq ($(DOUBLE),0)
+    DOUBLE_PRECISION := OFF
+else
+    $(error Bad DOUBLE variable: use 0 or 1)
+endif
+
+# ------------------------------------------------------------------------------
+# Platform / Compiler Selection (I ran it in a mac)
+# ------------------------------------------------------------------------------
+
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S),Darwin)
+    COMPILER_ARGS := \
+        -DCMAKE_C_COMPILER=/opt/local/bin/gcc-mp-14 \
+        -DCMAKE_CXX_COMPILER=/opt/local/bin/g++-mp-14 \
+        -DCMAKE_Fortran_COMPILER=/opt/local/bin/gfortran-mp-14 \
+        -DCMAKE_OSX_DEPLOYMENT_TARGET=26.0
+else ifeq ($(UNAME_S),Linux)
+    COMPILER_ARGS := \
+        -DCMAKE_C_COMPILER=gcc \
+        -DCMAKE_CXX_COMPILER=g++ \
+        -DCMAKE_Fortran_COMPILER=gfortran
+endif
+
+# ------------------------------------------------------------------------------
+# CMake Arguments
+# ------------------------------------------------------------------------------
+
+CMAKE_ARGS := \
+    -DGENERATE_TYPES=ON \
+    -DOPENMP=ON \
+    -DBUILD_FASTFARM:BOOL=ON \
+    -DBUILD_TESTING=ON \
+    -DCTEST_RUN_VERBOSE_FLAG=ON \
+    -DCTEST_PLOT_ERRORS=ON \
+    -DDOUBLE_PRECISION:BOOL=$(DOUBLE_PRECISION) \
+    -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) \
+    $(COMPILER_ARGS) \
+    -DCMAKE_Fortran_FLAGS_DEBUG="-g -fcheck=all -fbacktrace"
+
+# ------------------------------------------------------------------------------
+# Main Rules
+# ------------------------------------------------------------------------------
+
+.PHONY: all configure compile test clean
+
+all: compile
+
+# Configure CMake
+configure:
+	$(CMAKE) -S $(SOURCE_DIR) -B $(BUILD_DIR) $(CMAKE_ARGS)
+
+# Compile FAST.Farm
+ifeq ($(QUICK),1)
+compile:
+	$(CMAKE) --build $(BUILD_DIR) --target $(DRIVER) --parallel $(JOBS)
+else
+compile: configure
+	$(CMAKE) --build $(BUILD_DIR) --target $(DRIVER) --parallel $(JOBS)
+endif
+
+# Optional unit tests
+test: compile
+ifeq ($(UTEST),1)
+	cd $(BUILD_DIR) && ctest --output-on-failure
+else
+	@echo "Unit tests disabled. Set UTEST=1 to enable."
+endif
+
+# Clean build directory
+clean:
+	$(CMAKE) -E rm -rf $(BUILD_DIR)

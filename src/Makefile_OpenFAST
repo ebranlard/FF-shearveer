@@ -15,7 +15,6 @@ TEST_DIR = C:/Work/Student_projects/FAST.Farm/simulations-shear/task1_uniform_al
 TEST_FILE= input_curl.fstf
 
 
-
 # --------------------------------------------------------------------------------
 # --- Setting up MAKE, CMAKE, CTEST, and File/directory names
 # --------------------------------------------------------------------------------
