@@ -9,6 +9,9 @@
 # builds
 /build 
 
+#debug
+/debug
+
 # ignores everywhere
 # ----------------------
 # Fastfarm planes and output

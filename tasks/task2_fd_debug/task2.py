@@ -20,12 +20,12 @@ IPlot=[]
 IPlot+=[0]# Postprocessing
 IPlot+=[1] # plotting
 
-def store_lines(folder='task1_uniform_aligned', U0=12, zMid=250, filebases=None, DPlanes=None, D=126, outDir='_data/'):
+def store_lines(folder='task2_uniform_aligned', U0=12, zMid=250, filebases=None, DPlanes=None, D=126, outDir='_data/'):
     # Default values
     if filebases is None:
         filebases= { 'cart': 'input_cart' }
     if DPlanes is None:
-        DPlanes = [1, 5, 8]
+        DPlanes = [1, 2, 3]
     
     case = os.path.basename(folder)
 
@@ -45,8 +45,8 @@ def store_lines(folder='task1_uniform_aligned', U0=12, zMid=250, filebases=None,
     # Storing outDict[label][Dplane]
     for ilab, (label, filebase) in enumerate(filebases.items()):
         df = weio.read(os.path.join(folder, filebase+'.T1.out')).toDataFrame()
-        CT = df['RtAeroCt_[-]'].mean()
-        print(f'{label:10s}: CT={CT:.3f}')
+        #CT = df['RtAeroCt_[-]'].mean()
+        #print(f'{label:10s}: CT={CT:.3f}')
         outDict[label] = {}
         # --- Extract Planes and Lines for each downstream position
         for iPlane, Dplane in enumerate(outDict['DPlanes']):
@@ -91,16 +91,15 @@ filebases = {
     #'Curl'     :'input_curl',
     #'Polar'    :'input_polar',
     #'Cartesian':'input_cart',
-    'Polar_new'    :'input_polar_new',
-    'Curl_new'     :'input_curl_new',
-    'Cart_new':'input_cart_new',
+    #'Cart_FE'    :'input_cart_FE',
+    'Cart_FD'    :'input_cart_FD',
     }
 
 if 0 in IPlot:
-    store_lines(folder='task1_uniform_aligned', U0=12, zMid=250, filebases=filebases, D=126, outDir=outDir)
+    store_lines(folder='tasks/task2_uniform_aligned', U0=12, zMid=250, filebases=filebases, D=126, outDir=outDir)
 
 if 1 in IPlot:
-    d = load_dict('_data/task1_uniform_aligned.pkl')
+    d = load_dict('_data/task2_uniform_aligned.pkl')
 
     fig,axes = plt.subplots(1, 3, sharey=True, figsize=(12.8,3.8)) # (6.4,4.8)
     fig.subplots_adjust(left=0.07, right=0.98, top=0.930, bottom=0.133, hspace=0.20, wspace=0.14)
@@ -110,9 +109,15 @@ if 1 in IPlot:
             UDict[label] = d[label][Dplane]['Uh']
         ax=axes[iPlane]
         plotWakeDef(ax, d['y'], UDict, title='{}D'.format(Dplane), ylim=[-1.5,1.5])
-        eps = mean_rel_err(y1=UDict['Polar_new'][5:-5], y2=UDict['Curl_new'][5:-5], method='loc', verbose=True, varname='Ux')
-        ax.text(0.90,1.270,r'$\epsilon={:.1f}$%'.format(eps), fontsize=14, ha='center')
-    fig._title='Task1Deficit'
+        # eps = mean_rel_err(
+        #     y1=UDict['Cart_FE'][5:-5],
+        #     y2=UDict['Cart_FD'][5:-5],
+        #     method='loc',
+        #     verbose=True,
+        #     varname='Ux'
+        # )
+        # ax.text(0.90,1.270,r'$\epsilon={:.1f}$%'.format(eps), fontsize=14, ha='center')
+    fig._title='Task2Deficit'
     plt.show()
     
 if export:
